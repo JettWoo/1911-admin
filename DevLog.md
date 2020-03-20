@@ -125,4 +125,44 @@
 
       这里还有个问题，在antd默认使用less2.7.3，而我们之前装的less不是这个版本，所以我们要把less版本回退到2.7.3
 
-3. 
+3. 这样就可以想用什么组件引用就好了
+
+### 首页路由实现
+
+1级路由
+
+  登录页
+
+  管理页
+
+  \* 商品管理
+
+  \* 二手猫管理
+
+- 安装： npm install react-router-dom
+
+- 路由实现，一级路由
+
+  ```html
+  <HashRouter>
+      <Route path='/login' component={Login}></Route>
+      <Route path='/admin' component={Admin}}></Route>
+  </HashRouter>
+  ```
+
+  二级路由，子路由传入父级路由内部,父路由组件内部通过props.child接收
+
+  ```html
+  <HashRouter>
+      <Route path='/login' component={Login}></Route>
+      <Route path='/admin' render = {() => {
+        return (
+          <Admin>
+            <Route path='/admin/user' component={User}></Route>
+          </Admin>
+        )
+      }}></Route>
+  </HashRouter>
+  ```
+
+  
