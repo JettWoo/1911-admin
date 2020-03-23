@@ -1,23 +1,70 @@
-import React, { Component, Fragment } from 'react'
-import { Menu } from 'antd'
-export default class ComtomNav extends Component {
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Menu } from 'antd';
+import { Fragment } from 'react';
+import menuList from './menulist'
+/* import { 
+  HomeOutlined,
+  SettingFilled,
+  UserOutlined,
+  RadarChartOutlined
+ } from '@ant-design/icons' */
+const { SubMenu } = Menu;
+
+
+class CustomNav extends Component {
+
+  handleClick = (e) => {
+    this.props.history.push(e.item.props.path)
+  }
+  renderIcon(icon){
+    /* switch (icon) {
+      case 'home':
+        return <HomeOutlined/>
+      case 'set':
+        return <SettingFilled/>
+      case 'user':
+        return <UserOutlined/>
+      default:
+        return <RadarChartOutlined />
+    } */
+  }
+  
+  renderItem(data){
+    return data.map((item,index)=>{
+      if(item.children){
+        return(
+          <SubMenu key={item.key} title={(()=>{
+            return(
+              <span>
+                {this.renderIcon(item.icon)}
+                {item.title}
+              </span>
+            )
+          })()}>
+            {/* 如果里面还有2级 将渲染的方法在调用一遍 */}
+            {this.renderItem(item.children)}
+          </SubMenu>
+        )
+      }else{
+        return(
+        <Menu.Item key={item.key} path={item.path}>
+          {this.renderIcon(item.icon)}
+          {item.title}
+        </Menu.Item>
+        )
+      }
+    })
+  }
   render() {
     return (
       <Fragment>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">
-            <span>用户管理</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            {/* <VideoCameraOutlined /> */}
-            <span>nav 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            {/* <UploadOutlined /> */}
-            <span>nav 3</span>
-          </Menu.Item>
+        <Menu onClick={this.handleClick} mode="vertical" theme='dark'> {/* style={{ width: 256 }} */}
+          {this.renderItem(menuList)}
         </Menu>
       </Fragment>
     )
   }
 }
+
+export default withRouter(CustomNav)

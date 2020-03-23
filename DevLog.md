@@ -2,11 +2,11 @@
 
 环境搭建：
 
-- UI框架：Ant React Pro
+- UI框架：Ant React Pro(Ant Design for React/Angular/Vue)
 - JS框架：react
 - 网络请求：axios
 - 预处理语言：less
-- 屏幕适配方案：
+- 屏幕适配方案：百分比/栅格化系统
 - 路由插件：react-router-dom
 - 全局状态管理：react-redux & redux
 - 其他插件
@@ -127,6 +127,22 @@
 
 3. 这样就可以想用什么组件引用就好了
 
+### 项目架构
+
+src -> : pages: 存放页面组件
+
+​			components 公有组件
+
+​			api统一接口api管理
+
+​			utils: 工具类
+
+​			static：放一些静态文件，比如reset.css
+
+​			route: 页面路由
+
+​			store: 全局状态管理
+
 ### 首页路由实现
 
 1级路由
@@ -165,4 +181,55 @@
   </HashRouter>
   ```
 
+- 右侧Nav导航实现：使用antd的Menu(版本4.0.4和版本4.0.3的区别)
+
+### 管理平台的权限问题
+
+1. 不同的权限可以进入不同的页面显示不同的侧边栏
+   - 用户登录后会产生权限列表
+   - 通过权限列表动态渲染侧边栏
+2. 不同的权限功能是否也可以调用
+
+### 登录注册页面
+
+- 安装axios, npm install axios
+
+- 前端解决跨域， 在webpackDevServer.config.js中配置
+
+  ```javascript
+  proxy: {
+      '/hjj': {
+          target: '',
+          changeOrigin: true,
+          pathRewrite: {
+          '^/hjj': ''
+          }
+      }
+  }
+  ```
+
+- axios请求拦截
+
+  ```javascript
+  import axios from 'axios'
   
+  axios.interceptors.request.use(function (config) {
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
+  
+  axios.interceptors.response.use(function (response) {
+    return response.data;
+  }, function (error) {
+    return Promise.reject(error);
+  });
+  
+  export default axios
+  ```
+
+- 请求统一处理放到api目录下
+
+- 注意，axios方法调用，传参名字不要传递body
+
+- 登录页面布局使用antd的Form组件，这里做一次版本回退，使用antd-3.26.0

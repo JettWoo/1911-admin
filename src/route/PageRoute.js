@@ -3,6 +3,8 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import Admin from '../pages/Admin/Admin'
 import Login from '../pages/Login/Login'
 import User from '../pages/User/User'
+import Goods from '../pages/Goods/Goods'
+
 export default class PageRoute extends Component {
   render() {
     return (
@@ -20,6 +22,7 @@ export default class PageRoute extends Component {
                     )
                   }}></Route>
                   <Route path='/admin/user' component={User}></Route>
+                  <Route path='/admin/goods' component={Goods}></Route>
                 </Admin>
               )
             }}></Route>
