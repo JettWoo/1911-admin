@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-import api from '../../api/api'
+import AdminApi from '../../api/adminApi'
 import Style from './login.module.less'
+
 class Login extends Component {
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -13,21 +15,33 @@ class Login extends Component {
   };
 
   login = () => {
-    console.log('登录')
-    let { getFieldsValue, validateFields } = this.props.form
-
+    let { validateFields } = this.props.form /* getFieldsValue,  */
     // 获取输入的值，不管是否满足条件
     // let result = getFieldsValue()
-    // console.log('result:', result)
+
+    // 获取满足条件的值
     validateFields((err, data) => {
-      // console.log('err:', err, 'data:', data)
       if (err) {
         // 输入错误
         message.error('输入有误，请重试')
       } else {
-        message.success('登录成功，3s后跳转首页', 3, () => {
-          this.props.history.replace('/admin')
-        })
+        let { username, password } = data
+        AdminApi.login({userName: username, passWord: password})
+          .then(res => {
+            console.log('res',  res)
+            if (res.err === -1) {
+              message.error('用户名密码错误')
+            } else {
+              message.success('登录成功，3s后跳转首页', 3, () => {
+                // 登录成功存储token到localStorage
+                localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+                this.props.history.replace('/admin')
+              })
+            }
+          })
+          .catch(e => {
+            console.log(e)
+          })
       }
     })
   }
@@ -70,13 +84,13 @@ class Login extends Component {
                 valuePropName: 'checked',
                 initialValue: true,
               })(<Checkbox>Remember me</Checkbox>)}
-              <a className="login-form-forgot" href="">
+              <a className="login-form-forgot" href="#">
                 Forgot password
               </a>
               <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.login}>
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              {/* Or <a href="">register now!</a> */}
             </Form.Item>
           </Form>
         </div>

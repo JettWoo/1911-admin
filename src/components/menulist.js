@@ -3,7 +3,7 @@ export default[
     key:'1',
     title:"首页",
     icon:'home',
-    path:'/admin/home'
+    path:'/admin/main'
   },
   {
    key:'2',
@@ -22,6 +22,24 @@ export default[
       path:'/admin/userlist'
     }
    ]
+  },
+  {
+    key:'7',
+    title:"商品管理",
+    icon:'goods',
+    path:'/admin/goods'
+  },
+  {
+    key:'8',
+    title:"管理员",
+    icon:'administrator',
+    path:'/admin/administrator'
+  },
+  {
+    key:'10',
+    title:"统计",
+    icon:'set',
+    path:'/admin/statistics'
   },
   {
     key:'9',

@@ -103,10 +103,18 @@ module.exports = function(proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy: {
       '/hjj': {
-        target: '',
+        target: 'http://47.95.207.1:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/hjj': ''
+        }
+      },
+      '/jett': {
+        // target: 'http://114.215.148.3:3000',
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/jett': ''
         }
       }
     },

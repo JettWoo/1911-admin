@@ -23,7 +23,9 @@ export default class Admin extends Component {
                  <Layout  className={Style.container}>
                      {/* 左侧导航栏 */}
                     <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-                        <div className="logo" />
+                        <div className={Style.logo}>
+                            <img src='/logo.jpg' style={{height: '100%', width: '100%'}} alt='网站logo'/>
+                        </div>
                         <CustomNav></CustomNav>
                     </Sider>
                     {/* 右侧内容区域 */}
@@ -34,7 +36,7 @@ export default class Admin extends Component {
                             className: 'trigger',
                             onClick: this.toggle,
                             })} */}
-                            <h1>XX管理系统</h1>
+                            <h1 style={{'textAlign':'center', 'fontSize': '36px','color': '#777'}}>XX管理系统</h1>
                         </Header>
                         <Content
                             className="site-layout-background"
